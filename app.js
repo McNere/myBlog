@@ -12,7 +12,6 @@ var express               = require("express"),
     flash                 = require("connect-flash");
 
 
-//
 //REQUIRING ROUTES
 var indexRoutes           = require("./routes/index"),
     blogRoutes            = require("./routes/blog"),
