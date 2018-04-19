@@ -1,0 +1,30 @@
+<% include partials/header.ejs %>
+
+
+  <h1>Blog</h1>
+  <div class="ui top attached segment">
+    <div class="ui items">
+      <% blog.forEach(function(post, i) { %>
+        <div class="item">
+          <div class="image">
+            <img src="<%= post.image %>">
+          </div>
+          <div class="content">
+            <a class="header" href="/blog/<%= post._id %>"><%= post.title %></a>
+            <div class="meta"><span><%= post.created.toDateString() %> by <strong><a href="/user/<%= post.author.username %>"><%= post.author.username %></a></strong></span></div>
+            <div class="description">
+              <p><%= post.body.substring(0,100) %>...</p>
+            </div>
+            <div class="extra">
+              <a href="/blog/<%= post._id %>" class="ui blue button">Read more</a>
+            </div>
+          </div>
+        </div>
+        <% if (!(i === blog.length-1)) { %>
+          <div class="ui divider"></div>
+        <% } %>
+      <% }); %>
+  </div>
+</div>
+
+<% include partials/footer.ejs %>

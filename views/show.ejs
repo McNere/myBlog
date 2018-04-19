@@ -1,0 +1,69 @@
+<% include partials/header.ejs %>
+
+
+<div class="ui top attached segment">
+  <div class="item">
+    <h2><%= blog.title %></h2>
+    <div class="ui centered rounded image">
+      <img src="<%= blog.image %>">
+    </div>
+    <div class="content">
+      <span><%= moment(blog.created).format("Do MMMM YYYY, HH:mm") %> by <a href="/user/<%= blog.author.username %>"><%= blog.author.username %></a></span>
+    </div>
+    <div class="description container">
+      <p><%- blog.body %></p>
+    </div>
+    <% if (currentUser && (currentUser.username === blog.author.username || currentUser.admin)) { %>
+      <div class="ui divider"></div>
+      <div class="controls">
+        <a href="/blog/<%= blog._id %>/edit" class="ui yellow button">Edit</a>
+        <% if (currentUser && currentUser.admin) { %>
+          <form class="delete-form" action="/blog/<%= blog._id %>?_method=DELETE" method="POST">
+            <button class="ui red button">Delete</button>
+          </form>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<!-- COMMENT SECTION -->
+<div class="ui attached segment">
+  <h2>Comments</h2>
+  <% if (blog.comments[0]) { %>
+    <div class="ui divider"></div>
+    <div class="ui comments">
+      <% blog.comments.forEach(function(comment) { %>
+        <div class="comment">
+          <div class="content">
+            <a href="/user/<%= comment.user.username %>" class="author"><%= comment.user.username %></a>
+            <div class="text"><%- comment.comment %></div>
+            <div class="metadata">
+              <span class="date"><%= moment(comment.created).fromNow() %></span>
+              <% if (currentUser && (currentUser.username === comment.user.username || currentUser.admin)) { %>
+              <form action="/blog/<%= blog._id %>/<%= comment._id %>?_method=DELETE" method="POST">
+                <button class="commentBtn">Delete</button>
+              </form>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  <% } %>
+  <div class="ui divider"></div>
+  <form class="ui form" action="/blog/<%= blog._id%>?_method=PUT" method=POST>
+    <% if (currentUser) { %>
+    <label>Comment</label>
+    <textarea name="comment[comment]"></textarea>
+    <button class="ui blue button">Post comment</button>
+    <% } else { %>
+      <label>Comment</label>
+      <textarea disabled>You must be logged in to comment</textarea>
+      <button class="ui blue button" disabled>Post comment</button>
+    <% } %>
+  </form>
+</div>
+
+
+<% include partials/footer.ejs %>

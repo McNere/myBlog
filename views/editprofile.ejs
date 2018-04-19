@@ -1,0 +1,21 @@
+<% include partials/header.ejs %>
+
+
+<% if (currentUser.admin || currentUser.username === user.username) { %>
+  <form class="ui form" action="/user/<%= user.username %>/<%= user._id %>?_method=PUT" method="POST">
+    <div class="field">
+      <label>Description</label>
+      <input type="text" name="user[description]" value="<%= user.description %>">
+    </div>
+    <div class="field">
+      <label>Age</label>
+      <input type="text" name="user[age]" value="<%= user.age %>" required pattern="[0-9]+">
+    </div>
+    <button class="ui blue button">Save</button>
+  </form>
+<% } else { %>
+    <h2>Unauthorized access</h2>
+<% } %>
+
+
+<% include partials/footer.ejs %>

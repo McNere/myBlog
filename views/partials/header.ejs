@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Nerd Blog</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/app.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div id="navbar">
+      <div class="ui fixed inverted menu">
+        <div class="ui container">
+          <div class="header item">
+            <i class="power off icon"></i>
+            Nerd Blog
+          </div>
+          <a href="/blog" class="item">Home</a>
+          <a href="/blog/new" class="item">New Blog</a>
+          <div class="menu right">
+            <% if (!currentUser) { %>
+              <a href="/register" class="item">Sign up</a>
+              <a href="/login" class="item">Log in</a>
+            <% } else { %>
+              <span class="item"><a href="/user/<%= currentUser.username %>"><%= currentUser.username %></a></span>
+              <a href="/logout" class="item">Log out</a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui main text container">
+      <% if (error[0]) { %>
+        <div class="ui error message">
+          <%= error %>
+        </div>
+      <% } %>
+      <% if (success[0]) { %>
+        <div class="ui success message">
+          <%= success %>
+        </div>
+      <% } %>

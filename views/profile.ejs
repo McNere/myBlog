@@ -1,0 +1,46 @@
+<% include partials/header %>
+
+
+<h1>User profile for <%= user.username %></h1>
+<div class="ui top attached segment">
+    <label>Description:</label>
+    <% if (user.description) { %>
+        <p><%= user.description %></p>
+    <% } else { %>
+        <p>No description written</p>
+    <% } %>
+    <label>Age:</label>
+    <% if (user.age) { %>
+        <p><%= user.age %></p>
+    <% } else { %>
+        <p>Unknown</p>
+    <% } %>
+</div>
+<div class="ui attached segment">
+    <h4>Posts:</h4>
+    <% if (comments) { %>
+        <div class="ui comments">
+            <% comments.forEach(function(comment) { %>
+                <div class="comment">
+                    <div class="content">
+                      <a href="/user/<%= comment.user.username %>" class="author"><%= comment.user.username %></a>
+                      <div class="text"><%- comment.comment %></div>
+                      <div class="metadata">
+                        <span class="date"><%= moment(comment.created).fromNow() %></span>
+                      </div>
+                    </div>
+                 </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <p>This user hasn't posted anything yet</p>
+    <% } %>
+</div>
+<% if (currentUser.admin || user._id.equals(currentUser._id)) { %>
+    <div class="ui attached segment">
+        <a href="/user/<%= user.username %>/edit" class="ui yellow button">Edit profile</a>
+    </div>
+<% } %>
+
+
+<% include partials/footer %>

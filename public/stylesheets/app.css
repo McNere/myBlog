@@ -1,0 +1,29 @@
+#navbar {
+  margin-bottom: 50px;
+}
+
+.controls {
+  margin-top: 20px;
+}
+
+.delete-form {
+  display: inline;
+}
+
+.commentBtn {
+  border: none;
+  background: none;
+}
+
+.description.container {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#rules {
+  padding: 0;
+}
+
+#rules ul {
+  list-style-type: none;
+}
