@@ -9,7 +9,8 @@ var express               = require("express"),
     Comment               = require("./models/comment"),
     Blog                  = require("./models/blog"),
     app                   = express(),
-    flash                 = require("connect-flash");
+    flash                 = require("connect-flash"),
+    dotenv                = require("dotenv").config();
 
 
 //REQUIRING ROUTES
@@ -26,10 +27,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressSanitizer());
 app.use(methodOverride("_method"));
 app.use(flash());
-app.locals.moment = require("moment")
+app.locals.moment = require("moment");
 
 app.use(require("express-session")({
-  secret: "Humblejumbles and apple pies",
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false
 }));
