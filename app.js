@@ -49,7 +49,7 @@ app.use(function(req,res,next) {
 });
 
 //DATABASE CONFIG
-mongoose.connect("mongodb://localhost/myblog");
+mongoose.connect(process.env.DB_URL);
 
 //ROUTES
 app.use(indexRoutes);
