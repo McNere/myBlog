@@ -55,7 +55,8 @@ router.get("/blog/:id", function(req,res) {
 router.get("/blog/:id/edit", middleware.checkBlogOwner, function(req,res) {
   Blog.findById(req.params.id, function(err, foundBlog) {
     if (err || !foundBlog) {
-      res.redirect("/");
+      req.flash("error", "Not found");
+      res.redirect("/blog");
     }
     else {
       res.render("edit", {blog: foundBlog});
