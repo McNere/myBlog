@@ -8,7 +8,8 @@ var express = require("express"),
 router.get("/blog", function(req,res) {
   Blog.find({}, function(err, foundBlog) {
     if (err) {
-      res.send("Something went wrong");
+      req.flash("error", "Something went wrong");
+      res.redirect("/blog");
     }
     else {
       res.render("index", {blog: foundBlog});
@@ -22,7 +23,8 @@ router.post("/blog", middleware.isLoggedIn, function(req,res) {
   req.body.blog.author = { id: req.user._id, username: req.user.username };
   Blog.create(req.body.blog, function(err) {
     if (err) {
-      res.redirect("/");
+      req.flash("error", "Something went wrong");
+      res.redirect("/blog");
     }
     else {
       req.flash("success", "New blog posted");
@@ -38,7 +40,7 @@ router.get("/blog/new", middleware.isLoggedIn, function(req,res) {
 //SHOW BLOG
 router.get("/blog/:id", function(req,res) {
   Blog.findById(req.params.id).populate("comments").exec(function(err, foundBlog) {
-    if (err) {
+    if (err || !foundBlog) {
       req.flash("error", "Not found");
       res.redirect("/blog");
     }
@@ -52,7 +54,7 @@ router.get("/blog/:id", function(req,res) {
 //COMMENT AND EDIT BLOG PAGE
 router.get("/blog/:id/edit", middleware.checkBlogOwner, function(req,res) {
   Blog.findById(req.params.id, function(err, foundBlog) {
-    if (err) {
+    if (err || !foundBlog) {
       res.redirect("/");
     }
     else {
@@ -85,7 +87,7 @@ router.put("/blog/:id", middleware.isLoggedIn, function(req,res) {
   }
   else {
     Blog.findById(req.params.id, function(err, foundBlog) {
-      if (err) {
+      if (err ||  !foundBlog) {
         res.send("Something went wrong");
       }
       else {
@@ -115,7 +117,7 @@ router.put("/blog/:id", middleware.isLoggedIn, function(req,res) {
 //DELETE BLOG
 router.delete("/blog/:id", middleware.isLoggedIn, middleware.isAdmin, function(req,res) {
   Blog.findOne({ _id: req.params.id }, function(err, blog) {
-    if (err) {
+    if (err || !blog) {
       res.send("Something went wrong");
     }
     else {
@@ -134,7 +136,7 @@ router.delete("/blog/:id", middleware.isLoggedIn, middleware.isAdmin, function(r
 //DELETE COMMENT
 router.delete("/blog/:parentId/:childId", middleware.isLoggedIn, middleware.checkCommentOwner, function(req,res) {
   Comment.findByIdAndRemove(req.params.childId, function(err, removed) {
-    if (err) {
+    if (err || !removed) {
       console.log(err);
       res.redirect("/");
     } else {

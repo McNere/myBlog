@@ -8,11 +8,11 @@ var express = require("express"),
 router.get("/user/:username", middleware.isLoggedIn, function(req,res) {
   User.findOne({username: req.params.username}, function(err, foundUser) {
     if (err || foundUser === null) {
-      console.log(err);
-      res.send("User not found");
+      req.flash("error", "User not found");
+      res.redirect("/blog");
     } else {
       Comment.find().where("user.id").equals(foundUser._id).exec(function(err, comment) {
-        if (err) { 
+        if (err || !comment) {
           console.log(err);
         }
         else if (comment[0]) {
@@ -41,7 +41,7 @@ router.get("/user/:username/edit", middleware.sameUser, function(req,res) {
 //POST EDIT USERPROFILE
 router.put("/user/:username/:id", middleware.sameUser, function(req,res) {
   User.findByIdAndUpdate(req.params.id, req.body.user, function(err, user) {
-    if (err) {
+    if (err || !user) {
       console.log(err);
       res.redirect("/blog");
     }
