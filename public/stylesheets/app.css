@@ -27,3 +27,7 @@
 #rules ul {
   list-style-type: none;
 }
+
+.ui.menu span.item {
+	padding: 0;
+}
