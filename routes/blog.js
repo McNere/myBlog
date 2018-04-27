@@ -21,6 +21,9 @@ router.get("/blog", function(req,res) {
 router.post("/blog", middleware.isLoggedIn, function(req,res) {
   req.body.blog.body = req.sanitize(req.body.blog.body).replace(/\n/g, "<br>");
   req.body.blog.author = { id: req.user._id, username: req.user.username };
+  if (!req.body.blog.image || !/\.(jpg|png|gif)$/g.test(req.body.blog.image)) {
+    req.body.blog.image = "/images/placeholder1.png";
+  }
   Blog.create(req.body.blog, function(err) {
     if (err) {
       req.flash("error", "Something went wrong");
@@ -68,6 +71,9 @@ router.get("/blog/:id/edit", middleware.checkBlogOwner, function(req,res) {
 router.put("/blog/:id", middleware.isLoggedIn, function(req,res) {
   if (req.body.blog) {
     req.body.blog.body = req.sanitize(req.body.blog.body).replace(/\n/g, "<br>");
+    if (!req.body.blog.image || !/\.(jpg|gif|png)$/g.test(req.body.blog.image)) {
+      req.body.blog.image = "/images/placeholder1.png";
+    }
     Blog.findById(req.params.id, function(err, foundBlog) {
       if (err || !foundBlog) {
         req.flash("error", "Not found");
