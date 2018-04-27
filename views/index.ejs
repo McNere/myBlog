@@ -13,7 +13,7 @@
             <a class="header" href="/blog/<%= post._id %>"><%= post.title %></a>
             <div class="meta"><span><%= post.created.toDateString() %> by <strong><a href="/user/<%= post.author.username %>"><%= post.author.username %></a></strong></span></div>
             <div class="description">
-              <p><%= post.body.substring(0,100) %>...</p>
+              <p><%= post.body.substring(0,100).replace(/<br>/g, " ") %>...</p>
             </div>
             <div class="extra">
               <a href="/blog/<%= post._id %>" class="ui blue button">Read more</a>

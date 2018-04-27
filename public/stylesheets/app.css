@@ -35,3 +35,7 @@
 #messageBox {
   transition: all 0.5s;
 }
+
+.ui.inverted.menu {
+  background: #303030;
+}

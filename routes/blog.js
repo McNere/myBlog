@@ -19,7 +19,7 @@ router.get("/blog", function(req,res) {
 
 //POST NEW BLOG
 router.post("/blog", middleware.isLoggedIn, function(req,res) {
-  req.body.blog.body = req.sanitize(req.body.blog.body);
+  req.body.blog.body = req.sanitize(req.body.blog.body).replace(/\n/g, "<br>");
   req.body.blog.author = { id: req.user._id, username: req.user.username };
   Blog.create(req.body.blog, function(err) {
     if (err) {
@@ -67,7 +67,7 @@ router.get("/blog/:id/edit", middleware.checkBlogOwner, function(req,res) {
 //ADD COMMENT/EDIT BLOG
 router.put("/blog/:id", middleware.isLoggedIn, function(req,res) {
   if (req.body.blog) {
-    req.body.blog.body = req.sanitize(req.body.blog.body);
+    req.body.blog.body = req.sanitize(req.body.blog.body).replace(/\n/g, "<br>");
     Blog.findById(req.params.id, function(err, foundBlog) {
       if (err || !foundBlog) {
         req.flash("error", "Not found");

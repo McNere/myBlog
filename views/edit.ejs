@@ -12,7 +12,7 @@
   </div>
   <div class="field">
     <label>Post content</label>
-    <textarea name="blog[body]" placeholder="Post content"><%= blog.body %></textarea>
+    <textarea name="blog[body]" placeholder="Post content"><%= blog.body.replace(/<br>/g, "\n") %></textarea>
   </div>
   <button class="ui blue button">Save</button>
 </form>
