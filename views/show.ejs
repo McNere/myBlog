@@ -54,8 +54,8 @@
   <div class="ui divider"></div>
   <form class="ui form" action="/blog/<%= blog._id%>?_method=PUT" method=POST>
     <% if (currentUser) { %>
-    <label>Comment</label>
-    <textarea name="comment[comment]"></textarea>
+    <label>Comment (<span id="count">0</span>/100)</label>
+    <textarea name="comment[comment]" id="commentInput" maxlength=100></textarea>
     <button class="ui blue button">Post comment</button>
     <% } else { %>
       <label>Comment</label>
@@ -65,5 +65,6 @@
   </form>
 </div>
 
+<script type="text/javascript" src="/scripts/show.js"></script>
 
 <% include partials/footer.ejs %>

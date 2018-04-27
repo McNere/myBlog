@@ -94,22 +94,28 @@ router.put("/blog/:id", middleware.isLoggedIn, function(req,res) {
       else {
         req.body.comment.comment = req.sanitize(req.body.comment.comment);
         req.body.comment.user = { id: req.user._id, username: req.user.username };
-        Comment.create(req.body.comment, function(err, comment) {
-          if (err) {
-            console.log(err);
-            res.redirect("/");
-          } else {
-            foundBlog.comments.push(comment);
-            foundBlog.save(function(err) {
-              if (err) {
-                res.send("Something went wrong");
-              } else {
-                req.flash("success", "Comment posted");
-                res.redirect("/blog/"+req.params.id);
-              }
-            });
-          }
-        });
+        if (req.body.comment.comment.length > 100) {
+          req.flash("error", "Comment exceeds 100 characters");
+          res.redirect("back");
+        } else {
+          req.body.comment.comment = req.body.comment.comment.replace(/\n/g, "<br>");
+          Comment.create(req.body.comment, function(err, comment) {
+            if (err) {
+              console.log(err);
+              res.redirect("/");
+            } else {
+              foundBlog.comments.push(comment);
+              foundBlog.save(function(err) {
+                if (err) {
+                  res.send("Something went wrong");
+                } else {
+                  req.flash("success", "Comment posted");
+                  res.redirect("/blog/"+req.params.id);
+                }
+              });
+            }
+          });
+        }
       }
     });
   }
