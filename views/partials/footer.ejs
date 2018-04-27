@@ -1,3 +1,20 @@
+    
+        <% if (success[0] || error[0]) { %>
+            <script>
+                var messageBox = document.querySelector("#messageBox");
+                document.querySelector(".close.icon").addEventListener("click", fadeOut);
+                
+                var timedRemove = setTimeout(fadeOut, 5000);
+                
+                function fadeOut() {
+                    messageBox.style.opacity = 0;
+                    setTimeout(function() {
+                        messageBox.parentNode.removeChild(messageBox);
+                    }, 500);
+                    clearTimeout(timedRemove);
+                }
+            </script>
+        <% } %>
     </div>
   </body>
 </html>

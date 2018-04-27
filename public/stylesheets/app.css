@@ -31,3 +31,7 @@
 .ui.menu span.item {
 	padding: 0;
 }
+
+#messageBox {
+  transition: all 0.5s;
+}

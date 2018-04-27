@@ -30,12 +30,14 @@
     </div>
     <div class="ui main text container">
       <% if (error[0]) { %>
-        <div class="ui error message">
+        <div class="ui error message" id="messageBox">
           <%= error %>
+          <i class="close icon"></i>
         </div>
       <% } %>
       <% if (success[0]) { %>
-        <div class="ui success message">
+        <div class="ui success message" id="messageBox">
           <%= success %>
+          <i class="close icon"></i>
         </div>
       <% } %>
