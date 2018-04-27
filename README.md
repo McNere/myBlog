@@ -3,5 +3,5 @@
 * Authentication using Passport.js
 * MongoDB with Mongoose.js
  
-##CSS
+## CSS
 * Semantic UI
