@@ -1,8 +1,8 @@
 <% include partials/header %>
 
 
-<h2>Log in</h2>
-<form class="ui form" action="/login" method="POST">
+<h2 class="login">Log in</h2>
+<form class="ui form login" action="/login" method="POST">
     <div class="field">
         <input type="text" name="username" placeholder="Username" required>
     </div>
@@ -10,7 +10,7 @@
         <input type="password" name="password" placeholder="Password" required>
     </div>
     <div class="field">
-        <button class="ui blue button">Log in</button>
+        <button class="ui blue button loginBtn">Log in</button>
     </div>
 </form>
 

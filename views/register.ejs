@@ -4,7 +4,7 @@
 <h2>Register new user</h2>
 <div class="ui grid">
     <div class="ten wide column">
-        <form class="ui form" action="/register" method="POST">
+        <form class="ui form userform" action="/register" method="POST">
             <div class="field">
                 <input type="text" name="username" placeholder="Username" required>
             </div>
@@ -17,12 +17,13 @@
         </form>
     </div>
     <div class="six wide column" id="rules">
-        <ul>
-            <li>Upper-case letters</li>
-            <li>Lower-case letters</li>
-            <li>Numbers</li>
-            <li>Minimum length: 6</li>
-        </ul>
+        <h4>Password requirements</h4>
+        <p>
+            Upper-case letters<br>
+            Lower-case letters<br>
+            Numbers<br>
+            Minimum length: 6
+        </p>
     </div>
 </div>
 
